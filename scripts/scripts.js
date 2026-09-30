@@ -1,5 +1,6 @@
-let testTypes = ["Christmas", "Programming"];
-let testString = "tree";
+let testTypes = ["Programming"];
+let testString = "c";
+let jokesData;
 
 async function getJokes (type, string) {
 
@@ -7,7 +8,7 @@ async function getJokes (type, string) {
 
     if (type.length < 6) {
         for(let i = 0; i < type.length; i++) {
-            fetchString = fetchstring + type[i];
+            fetchString = fetchString + type[i];
             if (i != type.length-1) {
                 fetchString = fetchString + ","
             }
@@ -29,9 +30,29 @@ async function getJokes (type, string) {
     let jokesResult = await fetch(fetchString);
     console.log(jokesResult);
 
-    let jokesData = await jokesResult.json();
+    jokesData = await jokesResult.json();
     console.log(jokesData);
+
+    listJokeText();
 
 }
 
 getJokes(testTypes, testString);
+
+function listJokeText() {
+
+    let jokeArray = [];
+
+
+    for(let i = 0; i < jokesData.jokes.length; i++) {
+
+        if (jokesData.jokes[i].type == "single") {
+            jokeArray[i] = jokesData.jokes[i].joke;
+        } else if (jokesData.jokes[i].type == "twopart") {
+            jokeArray[i] = jokesData.jokes[i].setup + "\n" + jokesData.jokes[i].delivery;
+        }
+    }
+
+    console.log("jokes:" + jokeArray);
+}
+
