@@ -1,8 +1,9 @@
 let testTypes = ["Programming"];
 let testString = "c";
+let testLanguage = "es"
 let jokesData;
 
-async function getJokes (type, string) {
+async function getJokes (language, type, string) {
 
     let fetchString = "https://v2.jokeapi.dev/joke/"
 
@@ -17,7 +18,15 @@ async function getJokes (type, string) {
         fetchString = fetchString + "Any";
     }
 
-    fetchString = fetchString + "?blacklistFlags=nsfw,religious,political,racist,sexist,explicit";
+    if(language != "eng") {
+        fetchString = fetchString + "?lang=" + language;
+        fetchString = fetchString + "&blacklistFlags=nsfw,religious,political,racist,sexist,explicit";
+
+    } else {
+        fetchString = fetchString + "?blacklistFlags=nsfw,religious,political,racist,sexist,explicit";
+
+    }
+
 
     if (string.length > 0) {
         fetchString = fetchString + "&contains=" + string;
@@ -37,7 +46,7 @@ async function getJokes (type, string) {
 
 }
 
-getJokes(testTypes, testString);
+getJokes(testLanguage, testTypes, testString);
 
 function listJokeText() {
 
